@@ -3,6 +3,9 @@ package bg.tu_varna.sit;
 public class Symbol {
     private String name;
 
+    public Symbol() {
+    }
+
     public Symbol(String symbol) {
         this.name = symbol;
     }

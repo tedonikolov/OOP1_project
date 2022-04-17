@@ -3,6 +3,9 @@ package bg.tu_varna.sit;
 public class State {
     private String name;
 
+    public State() {
+    }
+
     public State(String name) {
         this.name = name;
     }

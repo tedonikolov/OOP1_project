@@ -10,6 +10,9 @@ public class Automation {
     private State startState;
     private List<State> finaleStates;
 
+    public Automation() {
+    }
+
     public Automation(List<State> states, List<Symbol> alphabet, List<Function> functions, State startState, List<State> finaleStates) {
         this.states = states;
         this.alphabet = alphabet;
@@ -131,5 +134,16 @@ public class Automation {
         }
 
         return string;
+    }
+
+    @Override
+    public String toString() {
+        return "Automation{" +
+                "states=" + states +
+                ", alphabet=" + alphabet +
+                ", functions=" + functions +
+                ", startState=" + startState +
+                ", finaleStates=" + finaleStates +
+                '}';
     }
 }

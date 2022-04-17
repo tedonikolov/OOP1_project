@@ -8,6 +8,9 @@ public class Function {
     private Symbol symbol;
     private List<State> secondStates;
 
+    public Function() {
+    }
+
     public Function(State firstState, Symbol symbol) {
         this.firstState = firstState;
         this.symbol = symbol;
