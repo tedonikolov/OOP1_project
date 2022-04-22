@@ -1,11 +1,10 @@
 package bg.tu_varna.sit;
 
-import java.io.IOException;
-
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
 
+        new Console();
 	    State state1=new State("1");
         Automation automation=new Automation(state1);
         State state2=new State("2");
@@ -46,7 +45,5 @@ public class Main {
         System.out.println(automation.serialize());
         Machines machines = new Machines();
         machines.addAutomation(automation);
-        FileFunctions file = new FileFunctions();
-        file.menu();
     }
 }

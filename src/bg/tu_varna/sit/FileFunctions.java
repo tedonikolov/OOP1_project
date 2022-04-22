@@ -1,78 +1,60 @@
 package bg.tu_varna.sit;
 
+import javax.swing.text.BadLocationException;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
-import java.util.Objects;
-import java.util.Scanner;
 
 
 public class FileFunctions {
     private String fileName;
     private Machines machines;
 
-    public void menu() throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        String command;
-        boolean flag=true;
-        do {
-            command = scanner.next();
-            switch (command) {
-                case "open":
-                    String name = scanner.nextLine();
-                    if(Objects.equals(name, "") || Objects.equals(name, " ")) {
-                        System.out.println("Must enter file name or path.");
-                        name = scanner.nextLine();
-                    }
-                    else
-                        name = name.substring(1);
-                    if(fileName==null) {
-                        fileName=name;
-                        open();
-                    }
-                    else
-                        System.out.println("You have already opened file!");
-                    break;
-                case "close":
-                    if(fileName!=null)
-                        close();
-                    else
-                        System.out.println("You first must open a file!");
-                    break;
-                case "save":
-                    if(fileName!=null)
-                        save();
-                    else
-                        System.out.println("You first must open a file!");
-                    break;
-                case "saveas":
-                    name = scanner.nextLine();
-                    if(Objects.equals(name, "") || Objects.equals(name, " ")) {
-                        System.out.println("Must enter file name or path.");
-                        name = scanner.nextLine();
-                    }
-                    else
-                    name = name.substring(1);
-                    if(fileName!=null) {
-                        saveAs(name);
-                    }
-                    else
-                        System.out.println("You first must open a file!");
-                    break;
-                case "help":
-                    help();
-                    break;
-                case "exit":
-                    flag=false;
-                    exit();
-                    break;
-                default:
-                    System.out.println("There is not such a command! \nPlease type: help");
-            }
-        }while(flag);
+    public void menu(String text,Console console) throws BadLocationException, IOException {
+
+        String[] command=text.split(" ");
+        if(command.length>2){
+            for (int i=2;i<command.length;i++)
+                command[1]=command[1]+" "+command[i];
+        }
+        switch (command[0]) {
+            case "open":
+                if (fileName == null) {
+                    fileName = command[1];
+                    open(console);
+                } else
+                    console.print("You have already opened file!");
+                break;
+            case "close":
+                if (fileName != null)
+                    close(console);
+                else
+                    console.print("You first must open a file!");
+                break;
+            case "save":
+                if (fileName != null)
+                    save(console);
+                else
+                    console.print("You first must open a file!");
+                break;
+            case "saveas":
+                if (fileName != null) {
+                    saveAs(command[1], console);
+                } else
+                    console.print("You first must open a file!");
+                break;
+            case "help":
+                help(console);
+                break;
+            case "exit":
+                exit(console);
+                break;
+            default:
+                console.print("There is not such a command! \nPlease type: help");
+        }
     }
 
-    public void open() throws IOException {
+    public void open(Console console) throws IOException, BadLocationException {
         File file = new File(fileName);
         if(file.exists()) {
             FileInputStream fileOpen = new FileInputStream(fileName);
@@ -82,52 +64,50 @@ public class FileFunctions {
                 decoder.close();
                 fileOpen.close();
             }
-            System.out.println("Successfully opened " + fileName);
+            console.print("Successfully opened " + fileName);
         }
         else {
             boolean newFile = file.createNewFile();
-            System.out.println("Successfully created "+fileName);
+            console.print("Successfully created "+fileName);
         }
     }
 
-    public void close(){
-        System.out.println("Successfully closed "+fileName);
+    public void close(Console console) throws BadLocationException {
+        console.print("Successfully closed "+fileName);
         fileName=null;
         machines=null;
     }
 
-    public void save() throws IOException {
+    public void save(Console console) throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(fileName);
         XMLEncoder encoder = new XMLEncoder(file);
         encoder.writeObject(machines);
         encoder.close();
         file.close();
-        System.out.println("Successfully saved "+fileName);
+        console.print("Successfully saved "+fileName);
     }
 
-    public void saveAs(String name) throws IOException {
+    public void saveAs(String name,Console console) throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(name);
         XMLEncoder encoder = new XMLEncoder(file);
         encoder.writeObject(machines);
         encoder.close();
         file.close();
-        System.out.println("Successfully saved "+name);
+        console.print("Successfully saved "+name);
     }
 
-    public void help()
-    {
-        System.out.println("The following commands are supported:");
-        System.out.println("open <file> \topens <file>");
-        System.out.println("close \t\t\tcloses currently opened file");
-        System.out.println("save \t\t\tsaves the currently open file");
-        System.out.println("saveas <file> \tsaves the currently open file in <file>");
-        System.out.println("help \t\t\tprints this information");
-        System.out.println("exit \t\t\texists the program \n");
+    public void help(Console console) throws BadLocationException {
+        console.print("The following commands are supported:");
+        console.print("open <file> \topens <file>");
+        console.print("close \t\tcloses currently opened file");
+        console.print("save \t\tsaves the currently open file");
+        console.print("saveas <file> \tsaves the currently open file in <file>");
+        console.print("help \t\tprints this information");
+        console.print("exit \t\texists the program \n");
     }
 
-    public void exit()
-    {
-        System.out.println("Exiting the program...");
+    public void exit(Console console) throws BadLocationException {
+        console.print("Exiting the program...");
         System.exit(0);
     }
 }
