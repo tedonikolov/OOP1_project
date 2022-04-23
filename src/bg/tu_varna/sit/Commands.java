@@ -6,11 +6,21 @@ import java.beans.XMLEncoder;
 import java.io.*;
 
 
-public class FileFunctions {
+public class Commands {
     private String fileName;
     private Machines machines;
+    private String text;
+    private Console console;
 
-    public void menu(String text,Console console) throws BadLocationException, IOException {
+    public Commands(Console console) {
+        this.console = console;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void menu() throws BadLocationException, IOException {
 
         String[] command=text.split(" ");
         if(command.length>2){
@@ -21,40 +31,40 @@ public class FileFunctions {
             case "open":
                 if (fileName == null) {
                     fileName = command[1];
-                    open(console);
+                    open();
                 } else
                     console.print("You have already opened file!");
                 break;
             case "close":
                 if (fileName != null)
-                    close(console);
+                    close();
                 else
                     console.print("You first must open a file!");
                 break;
             case "save":
                 if (fileName != null)
-                    save(console);
+                    save();
                 else
                     console.print("You first must open a file!");
                 break;
             case "saveas":
                 if (fileName != null) {
-                    saveAs(command[1], console);
+                    saveAs(command[1]);
                 } else
                     console.print("You first must open a file!");
                 break;
             case "help":
-                help(console);
+                help();
                 break;
             case "exit":
-                exit(console);
+                exit();
                 break;
             default:
                 console.print("There is not such a command! \nPlease type: help");
         }
     }
 
-    public void open(Console console) throws IOException, BadLocationException {
+    public void open() throws IOException, BadLocationException {
         File file = new File(fileName);
         if(file.exists()) {
             FileInputStream fileOpen = new FileInputStream(fileName);
@@ -72,13 +82,13 @@ public class FileFunctions {
         }
     }
 
-    public void close(Console console) throws BadLocationException {
+    public void close() throws BadLocationException {
         console.print("Successfully closed "+fileName);
         fileName=null;
         machines=null;
     }
 
-    public void save(Console console) throws IOException, BadLocationException {
+    public void save() throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(fileName);
         XMLEncoder encoder = new XMLEncoder(file);
         encoder.writeObject(machines);
@@ -87,7 +97,7 @@ public class FileFunctions {
         console.print("Successfully saved "+fileName);
     }
 
-    public void saveAs(String name,Console console) throws IOException, BadLocationException {
+    public void saveAs(String name) throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(name);
         XMLEncoder encoder = new XMLEncoder(file);
         encoder.writeObject(machines);
@@ -96,7 +106,7 @@ public class FileFunctions {
         console.print("Successfully saved "+name);
     }
 
-    public void help(Console console) throws BadLocationException {
+    public void help() throws BadLocationException {
         console.print("The following commands are supported:");
         console.print("open <file> \topens <file>");
         console.print("close \t\tcloses currently opened file");
@@ -106,7 +116,7 @@ public class FileFunctions {
         console.print("exit \t\texists the program \n");
     }
 
-    public void exit(Console console) throws BadLocationException {
+    public void exit() throws BadLocationException {
         console.print("Exiting the program...");
         System.exit(0);
     }

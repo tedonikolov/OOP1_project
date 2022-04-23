@@ -10,16 +10,18 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 
 public class Console {
-    public JFrame frame;
-    public JTextPane console;
-    public JTextField input;
-    public JScrollPane scrollPane;
-    public StyledDocument document;
+    private JFrame frame;
+    private JTextPane console;
+    private JTextField input;
+    private JScrollPane scrollPane;
+    private StyledDocument document;
+    private Commands commands = new Commands(this);
+
 
     public Console() {
         frame=new JFrame("Console");
         console = new JTextPane();
-        console.setFont(new Font("Courier New",Font.ITALIC,15));
+        console.setFont(new Font("Serif",Font.ITALIC,15));
         console.setSelectionColor(Color.white);
         console.setForeground(Color.green);
         console.setOpaque(false);
@@ -32,7 +34,7 @@ public class Console {
         document=console.getStyledDocument();
 
         input=new JTextField();
-        input.setFont(new Font("Courier New",Font.ITALIC,15));
+        input.setFont(new Font("Serif",Font.ITALIC,15));
         input.setSelectionColor(Color.white);
         input.setForeground(Color.green);
         input.setSelectedTextColor(Color.black);
@@ -52,11 +54,11 @@ public class Console {
         input.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FileFunctions file = new FileFunctions();
                 try {
                     document.remove(0, document.getLength());
                     String text=input.getText();
-                    file.menu(text, Console.this);
+                    commands.setText(text);
+                    commands.menu();
                     input.selectAll();
                 } catch (IOException | BadLocationException ex) {
                     ex.printStackTrace();
