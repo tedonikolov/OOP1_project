@@ -94,6 +94,12 @@ public class Commands {
                 } else
                     console.print("You first must open a file!");
                 break;
+            case "recognize":
+                if (fileName != null) {
+                    machines.recognize(Integer.parseInt(command[1]),command[2], console);
+                } else
+                    console.print("You first must open a file!");
+                break;
             default:
                 console.print("There is not such a command! \nPlease type: help");
         }

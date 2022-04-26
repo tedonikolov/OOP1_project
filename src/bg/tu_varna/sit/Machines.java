@@ -1,10 +1,7 @@
 package bg.tu_varna.sit;
 
 import javax.swing.text.BadLocationException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Machines {
     private int id=0;
@@ -103,6 +100,66 @@ public class Machines {
             } else {
                 console.print("The automation is deterministic");
             }
+        }
+    }
+
+    public void recognize(int id,String word,Console console) throws BadLocationException {
+        Automation automation=getAutomation(id);
+        boolean flag=false;
+        if(automation==null){
+            console.print("Automation with ID:"+id+" didn't exist");
+        } else {
+            List<State> states = null;
+            String[] symbol=word.split("");
+            for(Function function: automation.getFunctions()){
+                if(automation.getStartState()==function.getFirstState()){
+                    if(Objects.equals(symbol[0], function.getSymbol().getName())) {
+                        states=function.getSecondStates();
+                        flag=true;
+                        break;
+                    }
+                }
+            }
+            if(flag) {
+                for(int i=1;i<symbol.length;i++){
+                    for (Function function: automation.getFunctions()){
+                        flag=false;
+                        for(State state:states){
+                            if(state==function.getFirstState()){
+                                if(Objects.equals(symbol[i], function.getSymbol().getName())) {
+                                    states=function.getSecondStates();
+                                    flag=true;
+                                    break;
+                                }
+                            }
+                        }
+                        if(flag)
+                            break;
+                    }
+                    if(!flag)
+                        break;
+                }
+                if (flag) {
+                    for (State state : states) {
+                        for (State lastState : automation.getFinaleStates()) {
+                            if (state != lastState) {
+                                flag = false;
+                            }else{
+                                flag=true;
+                                break;
+                            }
+                        }
+                        if(flag)
+                            break;
+                    }
+                }
+            }
+        }
+        if(flag){
+            console.print("the word \""+word+"\" is from the automation with id:"+id);
+        }
+        else{
+            console.print("the word \""+word+"\" is not from the automation with id:"+id);
         }
     }
 }
