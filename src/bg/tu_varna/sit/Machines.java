@@ -45,16 +45,22 @@ public class Machines {
         return string;
     }
 
-    public void print(int id,Console console) throws BadLocationException {
-        boolean flag=false;
+    public Automation getAutomation(int id){
         for(Map.Entry<Integer,Automation> entry:automations.entrySet()){
             if(id==entry.getKey()) {
-                console.print(entry.getValue().serialize()+"");
-                flag=true;
+                return entry.getValue();
             }
         }
-        if(!flag){
+        return null;
+    }
+
+    public void print(int id,Console console) throws BadLocationException {
+        Automation automation=getAutomation(id);
+        if(automation==null){
             console.print("Automation with ID:"+id+" didn't exist");
+        }
+        else{
+            console.print(automation.serialize()+"");
         }
     }
 
@@ -65,5 +71,14 @@ public class Machines {
             list.add(entry.getKey());
         }
         console.print("IDs:"+list);
+    }
+
+    public void empty(int id,Console console) throws BadLocationException {
+        Automation automation=getAutomation(id);
+        if(automation.getAlphabet()==null)
+            console.print("The alphabet is empty");
+        else{
+            console.print("The alphabet is not empty. \n It contains the corresponding symbols:"+automation.getAlphabet());
+        }
     }
 }

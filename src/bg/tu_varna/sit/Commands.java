@@ -4,6 +4,7 @@ import javax.swing.text.BadLocationException;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
+import java.util.Map;
 
 
 public class Commands {
@@ -23,13 +24,13 @@ public class Commands {
     public void menu() throws BadLocationException, IOException {
 
         String[] command=text.split(" ");
-        if(command.length>2){
-            for (int i=2;i<command.length;i++)
-                command[1]=command[1]+" "+command[i];
-        }
         switch (command[0]) {
             case "open":
                 if (fileName == null) {
+                    if(command.length>2) {
+                        for (int i = 2; i < command.length; i++)
+                            command[1] = command[1] + " " + command[i];
+                    }
                     fileName = command[1];
                     open();
                 } else
@@ -49,6 +50,10 @@ public class Commands {
                 break;
             case "saveas":
                 if (fileName != null) {
+                    if(command.length>2) {
+                        for (int i = 2; i < command.length; i++)
+                            command[1] = command[1] + " " + command[i];
+                    }
                     saveAs(command[1]);
                 } else
                     console.print("You first must open a file!");
@@ -74,6 +79,12 @@ public class Commands {
             case "print":
                 if (fileName != null) {
                     machines.print(Integer.parseInt(command[1]),console);
+                } else
+                    console.print("You first must open a file!");
+                break;
+            case "empty":
+                if (fileName != null) {
+                    machines.empty(Integer.parseInt(command[1]),console);
                 } else
                     console.print("You first must open a file!");
                 break;
