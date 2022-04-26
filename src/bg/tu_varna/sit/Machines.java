@@ -36,9 +36,25 @@ public class Machines {
         automations.put(id,automation);
     }
 
-    public void print() {
+    @Override
+    public String toString() {
+        String string = "";
         for(Map.Entry<Integer,Automation> entry:automations.entrySet()){
-            System.out.println("ID:"+entry.getKey()+"\n"+entry.getValue().serialize());
+           string+="Automation ID:"+entry.getKey()+"\n"+entry.getValue().serialize()+"\n";
+        }
+        return string;
+    }
+
+    public void print(int id,Console console) throws BadLocationException {
+        boolean flag=false;
+        for(Map.Entry<Integer,Automation> entry:automations.entrySet()){
+            if(id==entry.getKey()) {
+                console.print(entry.getValue().serialize()+"");
+                flag=true;
+            }
+        }
+        if(!flag){
+            console.print("Automation with ID:"+id+" didn't exist");
         }
     }
 
