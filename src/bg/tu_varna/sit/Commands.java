@@ -59,6 +59,18 @@ public class Commands {
             case "exit":
                 exit();
                 break;
+            case "menu":
+                if (fileName != null) {
+                    subMenu();
+                } else
+                    console.print("You first must open a file!");
+                break;
+            case "list":
+                if (fileName != null) {
+                    machines.list(console);
+                } else
+                    console.print("You first must open a file!");
+                break;
             default:
                 console.print("There is not such a command! \nPlease type: help");
         }
@@ -108,16 +120,32 @@ public class Commands {
 
     public void help() throws BadLocationException {
         console.print("The following commands are supported:");
+        console.print("menu \t\tmenu of the program");
         console.print("open <file> \topens <file>");
         console.print("close \t\tcloses currently opened file");
         console.print("save \t\tsaves the currently open file");
         console.print("saveas <file> \tsaves the currently open file in <file>");
         console.print("help \t\tprints this information");
-        console.print("exit \t\texists the program \n");
+        console.print("exit \t\texists the program");
     }
 
     public void exit() throws BadLocationException {
         console.print("Exiting the program...");
         System.exit(0);
+    }
+
+    public void subMenu() throws BadLocationException {
+        console.print("list \t\t\tIDs of the automations");
+        console.print("print <id> \t\t\tprint the automation");
+        console.print("save <id> <filename> \tsaves automation in file");
+        console.print("empty <id> \t\tcheck if the alphabet is empty");
+        console.print("deterministic <id> \t\tcheck if the automation is determined");
+        console.print("recognize <id1> <word> \tcheck if the word is from the automation");
+        console.print("union <id1> <id2> \t\tunion of two automations");
+        console.print("concat <id1> <id2> \t\tconcatenation of two automations");
+        console.print("un <id> \t\t\tpositive envelope of automation");
+        console.print("reg <regex> \t\tKlini's theorem");
+        console.print("mutator <id> \t\tmake automation deterministic");
+        console.print("closed <id> \t\tcheck if the automation is closed-loop");
     }
 }
