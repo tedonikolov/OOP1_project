@@ -54,16 +54,6 @@ public class Machines {
         return null;
     }
 
-    public void print(int id,Console console) throws BadLocationException {
-        Automation automation=getAutomation(id);
-        if(automation==null){
-            console.print("Automation with ID:"+id+" didn't exist");
-        }
-        else{
-            console.print(automation.serialize()+"");
-        }
-    }
-
     public void list(Console console) throws BadLocationException {
         console.print("Number of automations:"+getId());
         List<Integer> list=new ArrayList<>();
@@ -73,12 +63,46 @@ public class Machines {
         console.print("IDs:"+list);
     }
 
+    public void print(int id,Console console) throws BadLocationException {
+        Automation automation=getAutomation(id);
+        if(automation==null){
+            console.print("Automation with ID:"+id+" didn't exist");
+        } else{
+            console.print(automation.serialize()+"");
+        }
+    }
+
     public void empty(int id,Console console) throws BadLocationException {
         Automation automation=getAutomation(id);
-        if(automation.getAlphabet()==null)
-            console.print("The alphabet is empty");
-        else{
-            console.print("The alphabet is not empty. \n It contains the corresponding symbols:"+automation.getAlphabet());
+        if(automation==null){
+            console.print("Automation with ID:"+id+" didn't exist");
+        }
+        else {
+            if (automation.getAlphabet() == null) {
+                console.print("The alphabet is empty");
+            }else {
+                console.print("The alphabet is not empty. \n It contains the corresponding symbols:" + automation.getAlphabet());
+            }
+        }
+    }
+
+    public void deterministic(int id,Console console) throws BadLocationException {
+        Automation automation=getAutomation(id);
+        if(automation==null){
+            console.print("Automation with ID:"+id+" didn't exist");
+        } else {
+            boolean flag = false;
+            for (Function function : automation.getFunctions()) {
+                if (function.getSecondStates().size() > 1) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) {
+                console.print("The automation is nondeterministic");
+            } else {
+                console.print("The automation is deterministic");
+            }
         }
     }
 }

@@ -88,6 +88,12 @@ public class Commands {
                 } else
                     console.print("You first must open a file!");
                 break;
+            case "deterministic":
+                if (fileName != null) {
+                    machines.deterministic(Integer.parseInt(command[1]),console);
+                } else
+                    console.print("You first must open a file!");
+                break;
             default:
                 console.print("There is not such a command! \nPlease type: help");
         }
