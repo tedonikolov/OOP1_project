@@ -21,7 +21,7 @@ public class Console {
     public Console() {
         frame=new JFrame("Console");
         console = new JTextPane();
-        console.setFont(new Font("Serif",Font.ITALIC,15));
+        console.setFont(new Font("Serif", Font.PLAIN, 21));
         console.setSelectionColor(Color.white);
         console.setForeground(Color.green);
         console.setOpaque(false);
@@ -34,7 +34,7 @@ public class Console {
         document=console.getStyledDocument();
 
         input=new JTextField();
-        input.setFont(new Font("Serif",Font.ITALIC,15));
+        input.setFont(new Font("Serif",Font.ITALIC,18));
         input.setSelectionColor(Color.white);
         input.setForeground(Color.green);
         input.setSelectedTextColor(Color.black);
@@ -45,7 +45,7 @@ public class Console {
         frame.getContentPane().setBackground(new Color(50,50,50));
         frame.add(input,BorderLayout.NORTH);
         frame.add(scrollPane, BorderLayout.CENTER);
-        frame.setSize(600,350);
+        frame.setSize(700,550);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);

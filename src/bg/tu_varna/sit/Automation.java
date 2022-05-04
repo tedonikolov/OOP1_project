@@ -115,7 +115,7 @@ public class Automation {
     }
 
     public StringBuilder serialize() {
-        StringBuilder string= new StringBuilder("\t\t");
+        StringBuilder string= new StringBuilder("\t\t\t");
         for(Symbol symbol:alphabet){
             string.append(symbol).append("\t");
         }
@@ -124,7 +124,7 @@ public class Automation {
         for(State state:states) {
             for (State finaleState : finaleStates) {
                 if (state != startState && state != finaleState) {
-                    string.append("\t").append(print(state)).append("\n");
+                    string.append("\t\t").append(print(state)).append("\n");
                 }
             }
         }

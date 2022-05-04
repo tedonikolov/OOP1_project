@@ -4,7 +4,6 @@ import javax.swing.text.BadLocationException;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
-import java.util.Map;
 
 
 public class Commands {
@@ -44,7 +43,16 @@ public class Commands {
                 break;
             case "save":
                 if (fileName != null)
-                    save();
+                    if(command.length==1)
+                        save();
+                    else {
+                        if(command.length>3) {
+                            for (int i = 3; i < command.length; i++)
+                                command[2] = command[2] + " " + command[i];
+                        }
+                        SaveAutomation saveAutomation=new SaveAutomation();
+                        saveAutomation.save(Integer.parseInt(command[1]),command[2],machines,console);
+                    }
                 else
                     console.print("You first must open a file!");
                 break;
@@ -165,13 +173,13 @@ public class Commands {
 
     public void subMenu() throws BadLocationException {
         console.print("list \t\t\tIDs of the automations");
-        console.print("print <id> \t\t\tprint the automation");
+        console.print("print <id> \t\tprint the automation");
         console.print("save <id> <filename> \tsaves automation in file");
         console.print("empty <id> \t\tcheck if the alphabet is empty");
-        console.print("deterministic <id> \t\tcheck if the automation is determined");
+        console.print("deterministic <id> \tcheck if the automation is determined");
         console.print("recognize <id1> <word> \tcheck if the word is from the automation");
-        console.print("union <id1> <id2> \t\tunion of two automations");
-        console.print("concat <id1> <id2> \t\tconcatenation of two automations");
+        console.print("union <id1> <id2> \tunion of two automations");
+        console.print("concat <id1> <id2> \tconcatenation of two automations");
         console.print("un <id> \t\t\tpositive envelope of automation");
         console.print("reg <regex> \t\tKlini's theorem");
         console.print("mutator <id> \t\tmake automation deterministic");
