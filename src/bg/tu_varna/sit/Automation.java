@@ -25,8 +25,8 @@ public class Automation {
         states = new ArrayList<>();
         alphabet = new ArrayList<>();
         functions = new ArrayList<>();
-        finaleStates = new ArrayList<>()
-        ;this.startState = startState;
+        finaleStates = new ArrayList<>();
+        this.startState = startState;
         addState(startState);
     }
 
@@ -122,10 +122,15 @@ public class Automation {
         string.append("\nSTART->\t").append(print(startState)).append("\n");
 
         for(State state:states) {
+            boolean flag=false;
             for (State finaleState : finaleStates) {
-                if (state != startState && state != finaleState) {
-                    string.append("\t\t").append(print(state)).append("\n");
+                flag= state != startState && state != finaleState;
+                if(!flag){
+                    break;
                 }
+            }
+            if(flag){
+                string.append("\t\t").append(print(state)).append("\n");
             }
         }
 

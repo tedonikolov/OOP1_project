@@ -106,6 +106,7 @@ public class Machines {
     public void recognize(int id,String word,Console console) throws BadLocationException {
         Automation automation=getAutomation(id);
         boolean flag=false;
+        int k=0;
         if(automation==null){
             console.print("Automation with ID:"+id+" didn't exist");
         } else {
@@ -116,12 +117,18 @@ public class Machines {
                     if(Objects.equals(symbol[0], function.getSymbol().getName())) {
                         states=function.getSecondStates();
                         flag=true;
+                        k=1;
+                        break;
+                    }
+                    else if(Objects.equals(function.getSymbol().getName(), "∅")){
+                        states=function.getSecondStates();
+                        flag=true;
                         break;
                     }
                 }
             }
             if(flag) {
-                for(int i=1;i<symbol.length;i++){
+                for(int i=k;i<symbol.length;i++){
                     for (Function function: automation.getFunctions()){
                         flag=false;
                         for(State state:states){
