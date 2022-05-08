@@ -3,7 +3,7 @@ package bg.tu_varna.sit;
 import javax.swing.text.BadLocationException;
 import java.util.*;
 
-public class Operation {
+public class Operations {
 
     public void union(int id1,int id2,Machines machines,Console console) throws BadLocationException {
         Automation automation1=machines.getAutomation(id1);
@@ -291,6 +291,9 @@ public class Operation {
         for(State state:automation11.getFinaleStates()){
             for(Function function:automation22.getFunctions()){
                 if(function.getFirstState()==automation22.getStartState()){
+                    number++;
+                    function.getFirstState().setName(Integer.toString(number));
+                    automation.addFunction(function);
                     Function function1=new Function(state,function.getSymbol());
                     for(State state1:function.getSecondStates()){
                         state1.setName(Integer.toString(number));

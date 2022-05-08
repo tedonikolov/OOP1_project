@@ -110,14 +110,14 @@ public class Commands {
                 break;
             case "union":
                 if (fileName != null) {
-                    Operation operation = new Operation();
+                    Operations operation = new Operations();
                     operation.union(Integer.parseInt(command[1]),Integer.parseInt(command[2]),machines,console);
                 } else
                     console.print("You first must open a file!");
                 break;
             case "concat":
                 if (fileName != null) {
-                    Operation operation = new Operation();
+                    Operations operation = new Operations();
                     operation.concat(Integer.parseInt(command[1]),Integer.parseInt(command[2]),machines,console);
                 } else
                     console.print("You first must open a file!");
