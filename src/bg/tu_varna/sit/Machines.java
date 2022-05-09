@@ -51,6 +51,14 @@ public class Machines {
         return null;
     }
 
+    public void setAutomation(int id, Automation automation){
+        for(Map.Entry<Integer,Automation> entry:automations.entrySet()){
+            if(id==entry.getKey()) {
+                entry.setValue(automation);
+            }
+        }
+    }
+
     public void list(Console console) throws BadLocationException {
         console.print("Number of automations:"+getId());
         List<Integer> list=new ArrayList<>();

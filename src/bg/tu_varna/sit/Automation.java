@@ -88,20 +88,21 @@ public class Automation {
 
     public StringBuilder print(State state) {
         StringBuilder stringBuilder=new StringBuilder();
-        stringBuilder.append(state).append("\t");
+        stringBuilder.append(state).append("}\t");
         for (Symbol symbol : alphabet) {
             boolean flag = false;
             for (Function function : functions) {
                 if (function.getFirstState() == state) {
                     if (symbol == function.getSymbol()) {
                         int i=1;
+                        stringBuilder.append("{");
                         for (State state1:function.getSecondStates()) {
                             if(i>1)
                                 stringBuilder.append(",");
                             stringBuilder.append(state1);
                             i++;
                         }
-                        stringBuilder.append("\t");
+                        stringBuilder.append("}\t");
                         flag = true;
                     }
                 }
@@ -119,7 +120,7 @@ public class Automation {
         for(Symbol symbol:alphabet){
             string.append(symbol).append("\t");
         }
-        string.append("\nSTART->\t").append(print(startState)).append("\n");
+        string.append("\nSTART->\t{").append(print(startState)).append("\n");
 
         for(State state:states) {
             boolean flag=false;
@@ -130,12 +131,12 @@ public class Automation {
                 }
             }
             if(flag){
-                string.append("\t\t").append(print(state)).append("\n");
+                string.append("\t\t{").append(print(state)).append("\n");
             }
         }
 
         for (State state:finaleStates){
-            string.append("  END->\t").append(print(state)).append("\n");
+            string.append("  END->\t{").append(print(state)).append("\n");
         }
 
         return string;
