@@ -123,7 +123,7 @@ public class Automation {
         string.append("\nSTART->\t{").append(print(startState)).append("\n");
 
         for(State state:states) {
-            boolean flag=false;
+            boolean flag=state != startState;
             for (State finaleState : finaleStates) {
                 flag= state != startState && state != finaleState;
                 if(!flag){
