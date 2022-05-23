@@ -136,6 +136,12 @@ public class Commands {
                 } else
                     console.print("You first must open a file!");
                 break;
+            case "finite":
+                if (fileName != null) {
+                    machines.finite(Integer.parseInt(command[1]),console);
+                } else
+                    console.print("You first must open a file!");
+                break;
             default:
                 console.print("There is not such a command! \nPlease type: help");
         }
@@ -211,6 +217,6 @@ public class Commands {
         console.print("un <id> \t\t\tpositive envelope of automation");
         console.print("reg <regex> \t\tKlini's theorem");
         console.print("mutator <id> \t\tmake automation deterministic");
-        console.print("closed <id> \t\tcheck if the automation is closed-loop");
+        console.print("finite <id> \t\tcheck if the automation is closed-loop");
     }
 }

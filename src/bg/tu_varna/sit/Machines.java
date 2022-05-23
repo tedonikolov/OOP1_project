@@ -177,4 +177,18 @@ public class Machines {
             console.print("the word \""+word+"\" is not from the automation with id:"+id);
         }
     }
+
+    public void finite(int id,Console console) throws BadLocationException {
+        Automation automation = getAutomation(id);
+        if (automation == null) {
+            console.print("Automation with ID:" + id + " didn't exist");
+        } else {
+            if(automation.getFinaleStates().size()==0){
+                console.print("Automation with ID:" + id + " is not finite");
+            }
+            else{
+                console.print("Automation with ID:" + id + " is finite");
+            }
+        }
+    }
 }

@@ -198,6 +198,24 @@ public class NewAutomation {
                 }
             }
         }
+        boolean flag=false;
+        int size=split.length;
+        if(Objects.equals(split[0], "(")){
+            flag=true;
+        }
+        for (int i = 0; i < size-2; i++) {
+            if (Objects.equals(split[0], ")")) {
+                flag = false;
+                break;
+            }
+        }
+        if(!flag||!Objects.equals(split[size-2], ")")||!Objects.equals(split[size-1], "*")){
+            for(State state1:automation.getStates()){
+                if(Objects.equals(state1.getName(), Integer.toString(number))){
+                    automation.addFinaleState(state1);
+                }
+            }
+        }
         machines.addAutomation(automation);
         console.print("The new automation id is:" + machines.getId());
     }
