@@ -46,7 +46,7 @@ public class Menu {
             case "save":
                 if (fileName != null)
                     if(command.length==1)
-                        commands.save(console,fileName);
+                        commands.save(console,fileName,machines);
                     else {
                         if(command.length>3) {
                             for (int i = 3; i < command.length; i++)
@@ -64,7 +64,7 @@ public class Menu {
                         for (int i = 2; i < command.length; i++)
                             command[1] = command[1] + " " + command[i];
                     }
-                    commands.saveAs(command[1],console);
+                    commands.saveAs(command[1],console,machines);
                 } else
                     console.print("You first must open a file!");
                 break;

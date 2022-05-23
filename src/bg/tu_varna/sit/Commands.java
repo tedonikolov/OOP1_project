@@ -7,9 +7,9 @@ import java.io.*;
 
 
 public class Commands {
-    private Machines machines;
 
     public Machines open(Console console, String fileName) throws IOException, BadLocationException {
+        Machines machines = new Machines();
         File file = new File(fileName);
         if(file.exists()) {
             FileInputStream fileOpen = new FileInputStream(fileName);
@@ -32,7 +32,7 @@ public class Commands {
         console.print("Successfully closed "+fileName);
     }
 
-    public void save(Console console, String fileName) throws IOException, BadLocationException {
+    public void save(Console console, String fileName, Machines machines) throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(fileName);
         XMLEncoder encoder = new XMLEncoder(file);
         encoder.writeObject(machines);
@@ -41,7 +41,7 @@ public class Commands {
         console.print("Successfully saved "+fileName);
     }
 
-    public void saveAs(String name,Console console) throws IOException, BadLocationException {
+    public void saveAs(String name, Console console, Machines machines) throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(name);
         XMLEncoder encoder = new XMLEncoder(file);
         encoder.writeObject(machines);
