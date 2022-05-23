@@ -7,147 +7,9 @@ import java.io.*;
 
 
 public class Commands {
-    private String fileName;
     private Machines machines;
-    private String text;
-    private Console console;
 
-    public Commands(Console console) {
-        this.console = console;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public void menu() throws BadLocationException, IOException {
-
-        String[] command=text.split(" ");
-        switch (command[0]) {
-            case "open":
-                if (fileName == null) {
-                    if(command.length>2) {
-                        for (int i = 2; i < command.length; i++)
-                            command[1] = command[1] + " " + command[i];
-                    }
-                    fileName = command[1];
-                    open();
-                } else
-                    console.print("You have already opened file!");
-                break;
-            case "close":
-                if (fileName != null)
-                    close();
-                else
-                    console.print("You first must open a file!");
-                break;
-            case "save":
-                if (fileName != null)
-                    if(command.length==1)
-                        save();
-                    else {
-                        if(command.length>3) {
-                            for (int i = 3; i < command.length; i++)
-                                command[2] = command[2] + " " + command[i];
-                        }
-                        SaveAutomation saveAutomation=new SaveAutomation();
-                        saveAutomation.save(Integer.parseInt(command[1]),command[2],machines,console);
-                    }
-                else
-                    console.print("You first must open a file!");
-                break;
-            case "saveas":
-                if (fileName != null) {
-                    if(command.length>2) {
-                        for (int i = 2; i < command.length; i++)
-                            command[1] = command[1] + " " + command[i];
-                    }
-                    saveAs(command[1]);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "help":
-                help();
-                break;
-            case "exit":
-                exit();
-                break;
-            case "menu":
-                if (fileName != null) {
-                    subMenu();
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "list":
-                if (fileName != null) {
-                    machines.list(console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "print":
-                if (fileName != null) {
-                    machines.print(Integer.parseInt(command[1]),console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "empty":
-                if (fileName != null) {
-                    machines.empty(Integer.parseInt(command[1]),console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "deterministic":
-                if (fileName != null) {
-                    machines.deterministic(Integer.parseInt(command[1]),console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "recognize":
-                if (fileName != null) {
-                    machines.recognize(Integer.parseInt(command[1]),command[2], console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "union":
-                if (fileName != null) {
-                    Operations operation = new Operations();
-                    operation.union(Integer.parseInt(command[1]),Integer.parseInt(command[2]),machines,console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "concat":
-                if (fileName != null) {
-                    Operations operation = new Operations();
-                    operation.concat(Integer.parseInt(command[1]),Integer.parseInt(command[2]),machines,console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "mutator":
-                if (fileName != null) {
-                    Mutator mutator = new Mutator();
-                    mutator.mutator(Integer.parseInt(command[1]),machines,console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "reg":
-                if (fileName != null) {
-                    NewAutomation newAutomation=new NewAutomation();
-                    newAutomation.reg(command[1],machines,console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            case "finite":
-                if (fileName != null) {
-                    machines.finite(Integer.parseInt(command[1]),console);
-                } else
-                    console.print("You first must open a file!");
-                break;
-            default:
-                console.print("There is not such a command! \nPlease type: help");
-        }
-    }
-
-    public void open() throws IOException, BadLocationException {
+    public Machines open(Console console, String fileName) throws IOException, BadLocationException {
         File file = new File(fileName);
         if(file.exists()) {
             FileInputStream fileOpen = new FileInputStream(fileName);
@@ -163,15 +25,14 @@ public class Commands {
             boolean newFile = file.createNewFile();
             console.print("Successfully created "+fileName);
         }
+        return machines;
     }
 
-    public void close() throws BadLocationException {
+    public void close(Console console, String fileName) throws BadLocationException {
         console.print("Successfully closed "+fileName);
-        fileName=null;
-        machines=null;
     }
 
-    public void save() throws IOException, BadLocationException {
+    public void save(Console console, String fileName) throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(fileName);
         XMLEncoder encoder = new XMLEncoder(file);
         encoder.writeObject(machines);
@@ -180,7 +41,7 @@ public class Commands {
         console.print("Successfully saved "+fileName);
     }
 
-    public void saveAs(String name) throws IOException, BadLocationException {
+    public void saveAs(String name,Console console) throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(name);
         XMLEncoder encoder = new XMLEncoder(file);
         encoder.writeObject(machines);
@@ -189,7 +50,7 @@ public class Commands {
         console.print("Successfully saved "+name);
     }
 
-    public void help() throws BadLocationException {
+    public void help(Console console) throws BadLocationException {
         console.print("The following commands are supported:");
         console.print("menu \t\tmenu of the program");
         console.print("open <file> \topens <file>");
@@ -200,12 +61,12 @@ public class Commands {
         console.print("exit \t\texists the program");
     }
 
-    public void exit() throws BadLocationException {
+    public void exit(Console console) throws BadLocationException {
         console.print("Exiting the program...");
         System.exit(0);
     }
 
-    public void subMenu() throws BadLocationException {
+    public void subMenu(Console console) throws BadLocationException {
         console.print("list \t\t\tIDs of the automations");
         console.print("print <id> \t\tprint the automation");
         console.print("save <id> <filename> \tsaves automation in file");
