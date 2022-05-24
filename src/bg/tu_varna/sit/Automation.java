@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *The Automation class represent finite state machine.
+ * The Automation class represent finite state machine.
+ * @author Teodor
+ * @version 1.0
+ * @see Symbol
+ * @see State
+ * @see Function
  */
 public class Automation {
     /**
