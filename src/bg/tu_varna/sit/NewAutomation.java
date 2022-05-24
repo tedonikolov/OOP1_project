@@ -3,8 +3,21 @@ package bg.tu_varna.sit;
 import javax.swing.text.BadLocationException;
 import java.util.*;
 
+/**
+ * The NewAutomation class represent the Klini's theorem for creating automation from regular expression.
+ * @author Teodor
+ * @version 1.0
+ * @see Automation
+ * @see Menu
+ */
 public class NewAutomation {
 
+    /**
+     * Create automation from regular expression.
+     * @param regex stores the regular expression.
+     * @param machines stores the current machines.
+     * @param console stores the console of the program.
+     */
     public void reg(String regex, Machines machines, Console console) throws BadLocationException {
         String[] symbols = regex.split("");
         Set<String> strings = new HashSet<>();

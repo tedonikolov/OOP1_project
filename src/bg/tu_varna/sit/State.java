@@ -2,20 +2,45 @@ package bg.tu_varna.sit;
 
 import java.util.Objects;
 
+/**
+ * The State class represent a single state from the automation.
+ * @author Teodor
+ * @version 1.0
+ */
 public class State {
+    /**
+     * Property "name" for storing the state name.
+     */
     private String name;
 
+    /**
+     * Empty constructor for the usage of JavaBean xml tools.
+     */
     public State() {
     }
 
+    /**
+     * Explicit value constructor for State.
+     * @param name stores the name of the state.
+     */
     public State(String name) {
         this.name = name;
     }
 
+    /**
+     * Getter for property "name".
+     *
+     * @return the name of the State.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter for property "name".
+     *
+     * @param name stores the state name.
+     */
     public void setName(String name) {
         this.name = name;
     }

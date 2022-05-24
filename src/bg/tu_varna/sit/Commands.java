@@ -5,9 +5,21 @@ import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.*;
 
-
+/**
+ * The Commands class represent the commands which are offered by the program.
+ * @author Teodor
+ * @version 1.0
+ * @see Console
+ * @see Menu
+ */
 public class Commands {
 
+    /**
+     * Opens the xml file.
+     * @param console stores the console of the program.
+     * @param fileName stores the file name.
+     * @return Machines which are provided by the file.
+     */
     public Machines open(Console console, String fileName) throws IOException, BadLocationException {
         Machines machines = new Machines();
         File file = new File(fileName);
@@ -28,10 +40,21 @@ public class Commands {
         return machines;
     }
 
+    /**
+     * Closes the current open file.
+     * @param console stores the console of the program.
+     * @param fileName stores the file name.
+     */
     public void close(Console console, String fileName) throws BadLocationException {
         console.print("Successfully closed "+fileName);
     }
 
+    /**
+     * Saves the machines in the current open file
+     * @param console stores the console of the program.
+     * @param fileName stores the file name.
+     * @param machines stores the current machines.
+     */
     public void save(Console console, String fileName, Machines machines) throws IOException, BadLocationException {
         FileOutputStream file= new FileOutputStream(fileName);
         XMLEncoder encoder = new XMLEncoder(file);
@@ -41,15 +64,10 @@ public class Commands {
         console.print("Successfully saved "+fileName);
     }
 
-    public void saveAs(String name, Console console, Machines machines) throws IOException, BadLocationException {
-        FileOutputStream file= new FileOutputStream(name);
-        XMLEncoder encoder = new XMLEncoder(file);
-        encoder.writeObject(machines);
-        encoder.close();
-        file.close();
-        console.print("Successfully saved "+name);
-    }
-
+    /**
+     * Prints out on the console the commands which are offered by the program.
+     * @param console stores the console of the program.
+     */
     public void help(Console console) throws BadLocationException {
         console.print("The following commands are supported:");
         console.print("menu \t\tmenu of the program");
@@ -61,11 +79,19 @@ public class Commands {
         console.print("exit \t\texists the program");
     }
 
+    /**
+     * Exit the program.
+     * @param console stores the console of the program.
+     */
     public void exit(Console console) throws BadLocationException {
         console.print("Exiting the program...");
         System.exit(0);
     }
 
+    /**
+     * Prints out on the console the menu of the program.
+     * @param console stores the console of the program.
+     */
     public void subMenu(Console console) throws BadLocationException {
         console.print("list \t\t\tIDs of the automations");
         console.print("print <id> \t\tprint the automation");

@@ -3,8 +3,21 @@ package bg.tu_varna.sit;
 import javax.swing.text.BadLocationException;
 import java.util.*;
 
+/**
+ * The Mutator class represent the tool for making automation deterministic.
+ * @author Teodor
+ * @version 1.0
+ * @see Automation
+ * @see Menu
+ */
 public class Mutator {
 
+    /**
+     * Makes nondeterministic automation deterministic.
+     * @param id stores the id of the current automation.
+     * @param machines stores the current machines.
+     * @param console stores the console of the program.
+     */
     public void mutator(int id, Machines machines, Console console) throws BadLocationException {
         Automation automation1 = machines.getAutomation(id);
         Automation automation=new Automation(automation1.getStartState());

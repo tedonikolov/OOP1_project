@@ -3,8 +3,20 @@ package bg.tu_varna.sit;
 import javax.swing.text.BadLocationException;
 import java.util.*;
 
+/**
+ * The Operations class represent the operations provided by the program for two automations.
+ * @author Teodor
+ * @version 1.0
+ * @see Automation
+ * @see Menu
+ */
 public class Operations {
 
+    /**
+     * Creates new Automation with same values as the provided automation, but with different hash code to avoid
+     * @param automation stores the current automation.
+     * @return Automation with same value but with different hash code.
+     */
     public Automation newAutomation(Automation automation){
         Automation automation1=new Automation(new State(automation.getStartState().getName()));
         automation1.setAlphabet(automation.getAlphabet());
@@ -49,6 +61,13 @@ public class Operations {
         return automation1;
     }
 
+    /**
+     * Makes the union of two automations.
+     * @param id1 stores the id of the first automation.
+     * @param id2 stores the id of the second automation.
+     * @param machines stores the current machines.
+     * @param console stores the console of the program.
+     */
     public void union(int id1,int id2,Machines machines,Console console) throws BadLocationException {
         Automation automation1=newAutomation(machines.getAutomation(id1));
         Automation automation2=newAutomation(machines.getAutomation(id2));
@@ -121,6 +140,13 @@ public class Operations {
         console.print("The new automation id is:"+machines.getId());
     }
 
+    /**
+     * Makes the concatenation of two automations.
+     * @param id1 stores the id of the first automation.
+     * @param id2 stores the id of the second automation.
+     * @param machines stores the current machines.
+     * @param console stores the console of the program.
+     */
     public void concat(int id1,int id2,Machines machines,Console console) throws BadLocationException {
         Automation automation1=newAutomation(machines.getAutomation(id1));
         Automation automation2=newAutomation(machines.getAutomation(id2));

@@ -3,24 +3,58 @@ package bg.tu_varna.sit;
 import javax.swing.text.BadLocationException;
 import java.io.IOException;
 
+/**
+ * The Menu class represent the menu of the program.
+ * @author Teodor
+ * @version 1.0
+ * @see Console
+ * @see Commands
+ * @see Machines
+ */
 public class Menu {
+    /**
+     * Property "fileName" represent the name of the opened file in the program.
+     */
     private String fileName;
+    /**
+     * Property "commands" represent the commands provided by the program.
+     */
     private final Commands commands;
+    /**
+     * Property "machines" represent the map of the automations currently existing in the program.
+     */
     private Machines machines;
+    /**
+     * Property "text" represent the current input from the console.
+     */
     private String text;
+    /**
+     * Property "console" represent the console of the program.
+     */
     private final Console console;
 
+    /**
+     * Explicit value constructor for Menu. Accepts only the mandatory console.
+     *
+     * @param console stores the console of the program.
+     */
     public Menu(Console console) {
         this.console = console;
         commands=new Commands();
     }
 
+    /**
+     * Get the input from the console.
+     * @param text stores the input from the console.
+     */
     public void setText(String text) {
         this.text = text;
     }
 
+    /**
+     * Execute the corresponding function according to the input text.
+     */
     public void menu() throws BadLocationException, IOException {
-
         String[] command=text.split(" ");
         switch (command[0]) {
             case "open":
@@ -64,7 +98,7 @@ public class Menu {
                         for (int i = 2; i < command.length; i++)
                             command[1] = command[1] + " " + command[i];
                     }
-                    commands.saveAs(command[1],console,machines);
+                    commands.save(console,command[1],machines);
                 } else
                     console.print("You first must open a file!");
                 break;

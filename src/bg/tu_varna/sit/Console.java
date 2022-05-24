@@ -9,15 +9,40 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
+/**
+ * The Console class represent a command prompt window with simple interface.
+ * @author Teodor
+ * @version 1.0
+ */
 public class Console {
+    /**
+     * Property "frame" represent the console frame.
+     */
     private JFrame frame;
+    /**
+     * Property "console" represent the console view area.
+     */
     private JTextPane console;
+    /**
+     * Property "input" represent the input area.
+     */
     private JTextField input;
+    /**
+     * Property "scrollPane" represent the scrollbar.
+     */
     private JScrollPane scrollPane;
+    /**
+     * Property "document" represent the output in the view area.
+     */
     private StyledDocument document;
-    private Commands commands = new Commands(this);
+    /**
+     * Property "commands" represent the menu of the program.
+     */
+    private Menu menu = new Menu(this);
 
-
+    /**
+     * Empty constructor for creating the console.
+     */
     public Console() {
         frame=new JFrame("Console");
         console = new JTextPane();
@@ -57,8 +82,8 @@ public class Console {
                 try {
                     document.remove(0, document.getLength());
                     String text=input.getText();
-                    commands.setText(text);
-                    commands.menu();
+                    menu.setText(text);
+                    menu.menu();
                     input.selectAll();
                 } catch (IOException | BadLocationException ex) {
                     ex.printStackTrace();
@@ -79,6 +104,10 @@ public class Console {
         });
     }
 
+    /**
+     * Print the text out on the console.
+     * @param text stores the printed text.
+     */
     public void print(String text) throws BadLocationException {
         Style style=console.addStyle("Style",null);
         StyleConstants.setForeground(style,Color.green);
