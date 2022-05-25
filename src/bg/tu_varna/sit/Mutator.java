@@ -61,7 +61,16 @@ public class Mutator {
                             if(flag){
                                 if(flag1){
                                     states.add(state1);
-                                    automation.addFinaleState(state1);
+                                    boolean flag2=true;
+                                    for(State state2:automation.getFinaleStates()){
+                                        if (Objects.equals(state2.getName(), state1.getName())) {
+                                            flag2 = false;
+                                            break;
+                                        }
+                                    }
+                                    if(flag2){
+                                        automation.addFinaleState(state1);
+                                    }
                                 }
                             }
                             else{
