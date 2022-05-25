@@ -174,8 +174,11 @@ public class Operations {
 
         int number=0;
         for(State state:automation1.getStates()){
-            if(number<Integer.parseInt(state.getName())) {
-                number = Integer.parseInt(state.getName());
+            String name=state.getName().strip();
+            if(name.length()<2) {
+                if (number < Integer.parseInt(state.getName())) {
+                    number = Integer.parseInt(state.getName());
+                }
             }
         }
 
@@ -187,11 +190,18 @@ public class Operations {
                     automation.addFunction(function);
                     Function function1=new Function(state,function.getSymbol());
                     for(State state1:function.getSecondStates()){
+                        number++;
                         state1.setName(Integer.toString(number));
+                        boolean flag=true;
                         for(Function function2:automation1.getFunctions()){
                             if (function2.getFirstState() == function1.getFirstState() && function2.getSymbol() == function1.getSymbol()) {
                                 function2.addSecondState(state1);
+                                flag=false;
                             }
+                        }
+                        if(flag){
+                            function1.addSecondState(state1);
+                            automation.addFunction(function1);
                         }
                     }
                 }
@@ -203,6 +213,10 @@ public class Operations {
             }
         }
 
+        for(State state : automation2.getFinaleStates()){
+            state.setName(String.valueOf(number));
+            number++;
+        }
         automation.setFinaleStates(automation2.getFinaleStates());
 
         Set<State> states=new HashSet<>();
