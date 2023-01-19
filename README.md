@@ -1,6 +1,8 @@
 # OOP1_project
 Nondeterministic finite state machine 
 https://replit.com/@tedonikolov/OOP1project?v=1
+<p>An insight into the essence of the finite automaton. Using the following mathematical quintuple <b>M={S,E,f,S0,F}</b>. For this purpose, we create classes:</i> State</i> – representing a state; <i>Symbol</i> – representing one symbol; <i>Function</i> – representing a transition function. The <i>Automation</i> class represents the state automaton. It contains the following attributes: states – a list of the states of the automaton; alphabet – a list of the symbols of the automation; functions – a list of transition functions; startState – the initial state of the automaton; finaleStates – list of final states of the automaton.</p>
+
 <p>The program uses home made Console similar to command prompt. To check all supported commands can be typed: <b><i>help</i></b></p>
 <a href="https://www.linkpicture.com/view.php?img=LPic63c97fabaa3441022312171"><img src="https://www.linkpicture.com/q/Screenshot_20230119_073553.png" type="image"></a>
 <p> Before using the menu and all others, a xml file must be open.</p>
